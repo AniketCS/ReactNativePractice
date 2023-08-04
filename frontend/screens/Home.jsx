@@ -4,27 +4,42 @@ import { defaultStyle, colors } from '../styles/styles';
 import Header from "../components/Header";
 import { Avatar, Button } from 'react-native-paper';
 import { useState } from 'react';
+import SearchModel from '../components/SearchModel';
 
-const Home = () => {
 
-  const categories =[{category:"abc", _id:"1"},
+const categories =[{category:"abc", _id:"1"},
   {category:"jlm", _id:"2"},
   {category:"def", _id:"3"},
   {category:"xyz", _id:"4"}
   ]
-  
+
+const products=[];
+
+const Home = () => {
+
   const [category,setCategory]=useState("");
+  const [activeSearch,setActiveSearch]= useState(false);  //whenever user will click on this it will get set to true
+  const [searchQuery, setSearchQuery] =useState("") ;  //initially empty
+
 
   const categoryButtonHandler =(id) => {
     // can do console.log(id) here just to check
     setCategory(id);
   };
-
+   
+   
   console.log(category);
  
   return (
+   <>
+     <SearchModel  
+     searchQuery={searchQuery} 
+     setSearchQuery={setSearchQuery} 
+     setActiveSearch={setActiveSearch}
+     products={products}
+     />
 
-    //just spreading of the variable. spreading means having all the properties of the object
+    {/*just spreading of the variable. spreading means having all the properties of the object*/}
     <View style={{...defaultStyle, flex:1}}>
 
       <Header />
@@ -38,13 +53,14 @@ const Home = () => {
         alignItems:"center",
       }}>
       <View>
-        <Text style={{fontSize:25}}>Our </Text>
-        <Text style={{fontSize:25, fontWeight:"900"}}>Products</Text>
+        <Text style={{fontSize:25}}>Sports Vista Mart</Text>
+        <Text style={{fontSize:25, fontWeight:"900"}}>Equipments</Text>
       </View>
 
       {/* Search Bar*/}
-      <View>
-        <TouchableOpacity>
+      <View> 
+        { /*whatever was previously there, opposite will happen when active search is true, passing it again will make it false*/}
+        <TouchableOpacity onPress ={() =>setActiveSearch((prev) =>!prev) }>   
           {/* elevation means box shadow */}
           <Avatar.Icon 
           icon="magnify" 
@@ -96,6 +112,7 @@ const Home = () => {
       </View>
 
     </View>
+    </>
   );
 };
 
