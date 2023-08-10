@@ -7,6 +7,7 @@ import { useState } from 'react';
 import SearchModel from '../components/SearchModel';
 import ProductCard from '../components/ProductCard';
 import { useNavigation } from '@react-navigation/native';
+import Footer from '../components/Footer';
 
 
 const categories =[{category:"abc", _id:"1"},
@@ -165,6 +166,8 @@ const Home = () => {
         </ScrollView>
       </View>
     </View>
+
+    <Footer activeRoute={"home"}/>
     </>
   );
 };
