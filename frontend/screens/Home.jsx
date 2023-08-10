@@ -13,13 +13,24 @@ const categories =[{category:"abc", _id:"1"},
   {category:"xyz", _id:"4"}
   ]
 
-const products=[];
+  {/** array for products in which each product has an array of images */}
+const products=[{
+  price:200,
+  name:"Tennis Raquet",
+  _id:"randomid",
+  images:[{
+    url:"https://media.istockphoto.com/id/1064972966/photo/3d-rendering-a-single-tennis-racquet-lying-with-a-yellow-ball-on-white-background.webp?b=1&s=612x612&w=0&k=20&c=T6hk2NZS-3Bz_RKDjiYH1XkGIJdJfSrgABEzPIQbijY=" ,
+
+  }],
+},
+]; 
+
 
 const Home = () => {
 
   const [category,setCategory]=useState("");
-  const [activeSearch,setActiveSearch]= useState(false);  //whenever user will click on this it will get set to true
-  const [searchQuery, setSearchQuery] =useState("") ;  //initially empty
+  const [activeSearch,setActiveSearch]= useState(false);  {/*whenever user will click on this it will get set to true*/}
+  const [searchQuery, setSearchQuery] =useState("") ;  {/*initially empty*/}
 
 
   const categoryButtonHandler =(id) => {
@@ -32,12 +43,17 @@ const Home = () => {
  
   return (
    <>
-     <SearchModel  
+   {
+    activeSearch && (
+      <SearchModel  
      searchQuery={searchQuery} 
      setSearchQuery={setSearchQuery} 
      setActiveSearch={setActiveSearch}
      products={products}
      />
+    )
+   }
+     
 
     {/*just spreading of the variable. spreading means having all the properties of the object*/}
     <View style={{...defaultStyle, flex:1}}>
@@ -59,7 +75,7 @@ const Home = () => {
 
       {/* Search Bar*/}
       <View> 
-        { /*whatever was previously there, opposite will happen when active search is true, passing it again will make it false*/}
+        { /*whatever was previously there, opposite will happen. When active search is true, passing it again will make it false*/}
         <TouchableOpacity onPress ={() =>setActiveSearch((prev) =>!prev) }>   
           {/* elevation means box shadow */}
           <Avatar.Icon 
