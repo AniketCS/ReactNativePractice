@@ -5,6 +5,8 @@ import Header from "../components/Header";
 import { Avatar, Button } from 'react-native-paper';
 import { useState } from 'react';
 import SearchModel from '../components/SearchModel';
+import ProductCard from '../components/ProductCard';
+import { useNavigation } from '@react-navigation/native';
 
 
 const categories =[{category:"abc", _id:"1"},
@@ -15,14 +17,25 @@ const categories =[{category:"abc", _id:"1"},
 
   {/** array for products in which each product has an array of images */}
 const products=[{
-  price:200,
+  price:150,
   name:"Tennis Raquet",
   _id:"randomid",
   images:[{
     url:"https://media.istockphoto.com/id/1064972966/photo/3d-rendering-a-single-tennis-racquet-lying-with-a-yellow-ball-on-white-background.webp?b=1&s=612x612&w=0&k=20&c=T6hk2NZS-3Bz_RKDjiYH1XkGIJdJfSrgABEzPIQbijY=" ,
 
   }],
+  stock:23,
 },
+{
+  price:250,
+  name:"Cricket Bat",
+  _id:"randomid2",
+  images:[{
+    url:"https://media.istockphoto.com/id/505125296/photo/wooden-cricket-bat-and-ball-on-a-white-background.jpg?s=612x612&w=0&k=20&c=b54YfksQfdM_oExjMx6LU5myGkY6gveVqkPvM2CeWYY=" ,
+
+  }],
+  stock:23,
+}
 ]; 
 
 
@@ -37,9 +50,13 @@ const Home = () => {
     // can do console.log(id) here just to check
     setCategory(id);
   };
-   
-   
-  console.log(category);
+  
+
+  const addToCardHandler =(id) => {
+    console.log("Add to cart", id)
+  };
+  
+  const navigate=useNavigation();
  
   return (
    <>
@@ -69,8 +86,8 @@ const Home = () => {
         alignItems:"center",
       }}>
       <View>
-        <Text style={{fontSize:25}}>Sports Vista Mart</Text>
-        <Text style={{fontSize:25, fontWeight:"900"}}>Equipments</Text>
+        <Text style={{fontSize:25, fontWeight:"700"}}>Sports Vista Mart</Text>
+        {/* <Text style={{fontSize:25, fontWeight:"900"}}>Products</Text> */}
       </View>
 
       {/* Search Bar*/}
@@ -124,9 +141,29 @@ const Home = () => {
           ))
         }
        </ScrollView>
-
       </View>
 
+      {/**products */}
+
+      <View style={{flex:1}}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {
+            products.map(( item, index)=>(
+              <ProductCard 
+              stock ={item.stock}
+              name={item.name}
+              price={item.price}
+              image={item.images[0]?.url}
+              id={item._id}
+              addToCardHandler={addToCardHandler} 
+              i={index}
+              key={item._id}
+              navigate={navigate}
+              />
+            ))
+          }
+        </ScrollView>
+      </View>
     </View>
     </>
   );
